@@ -4,12 +4,13 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class Client extends ClientData {
     private String ip;
     private int port;
     private String name;
 
-    public Client(String ip, int port ,String name ) {
+    public Client(int id, String username, String password, String email, String phoneNumber, String ip, int port, String name) {
+        super(id, username, password, email, phoneNumber);
         this.ip = ip;
         this.port = port;
         this.name = name;
