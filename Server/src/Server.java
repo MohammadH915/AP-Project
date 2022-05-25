@@ -67,6 +67,7 @@ public class Server {
             try {
                 while (true) {
                     Msg msg = (Msg) objectInput.readObject();
+                    if(msg.getType().equals("CheckUser"))
                     if (msg.getType().equals("join")) {
                         System.out.println(msg.getOwner().toString() + " is joined to server");
                         this.name = msg.getOwner();

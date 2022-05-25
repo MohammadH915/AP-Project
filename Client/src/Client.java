@@ -9,11 +9,9 @@ public class Client extends ClientData {
     private int port;
     private String name;
 
-    public Client(int id, String username, String password, String email, String phoneNumber, String ip, int port, String name) {
-        super(id, username, password, email, phoneNumber);
+    public Client(String ip, int port) {
         this.ip = ip;
         this.port = port;
-        this.name = name;
     }
 
     public void start(){
@@ -26,11 +24,27 @@ public class Client extends ClientData {
             Thread listenerThread = new Thread(listener);
             listenerThread.start();
 
-            outputStream.writeObject(new Msg(name,"","join"));
+            //outputStream.writeObject(new Msg(name,"","join"));
+            Scanner scanner = new Scanner(System.in);
 
+            while(true) {
+                System.out.println("1. Sign Up\n2. Sign In");
+                int type = Integer.parseInt(scanner.nextLine());
+                if(type != 1 && type != 2)
+                    continue;
+                if(type == 1) {
+                    System.out.print("Username : ");
+                    String user = scanner.nextLine();
+                    System.out.print("Password : ");
+                    String pass = scanner.nextLine();
+                    System.out.print("Confirm Password : ");
+                    String confPass = scanner.nextLine();
+                    outputStream.writeObject(new Msg("Null", user, "CheckUser"));
+                }
+                break;
+            }
 
             //send part
-            Scanner scanner = new Scanner(System.in);
             while (true){
                 String text = scanner.nextLine();
                 outputStream.writeObject(new Msg(this.name, text , "msg"));
@@ -66,7 +80,6 @@ public class Client extends ClientData {
                     e.printStackTrace();
                 }
             }
-
 
         }
     }

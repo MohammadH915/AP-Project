@@ -2,19 +2,19 @@ import java.util.ArrayList;
 
 public class DataBase {
     private  ArrayList <ClientData> clientDatas = new ArrayList<>();
-    private int maxId;
+    private int maxIdClient;
 
     public DataBase() {
         this.clientDatas = new ArrayList<>();
-        this.maxId = 1;
+        this.maxIdClient = 1;
     }
 
-    public int getMaxId() {
-        return maxId;
+    public int getMaxIdClient() {
+        return maxIdClient;
     }
 
-    public void setMaxId(int maxId) {
-        this.maxId = maxId;
+    public void setMaxIdClient(int maxId) {
+        this.maxIdClient = maxId;
     }
 
     public void addClient(ClientData clientData) {

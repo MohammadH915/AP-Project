@@ -5,13 +5,13 @@ public abstract class ClientData {
     private String email;
     private String phoneNumber;
 
-    public ClientData(int id, String username, String password, String email, String phoneNumber) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
+//    public ClientData(int id, String username, String password, String email, String phoneNumber) {
+//        this.id = id;
+//        this.username = username;
+//        this.password = password;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//    }
 
     public int getId() {
         return id;
