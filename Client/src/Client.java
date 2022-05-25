@@ -1,3 +1,4 @@
+import java.awt.font.NumericShaper;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,6 +9,8 @@ public class Client extends ClientData {
     private String ip;
     private int port;
     private String name;
+
+    private String checkUser;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -26,22 +29,29 @@ public class Client extends ClientData {
 
             //outputStream.writeObject(new Msg(name,"","join"));
             Scanner scanner = new Scanner(System.in);
-
             while(true) {
-                System.out.println("1. Sign Up\n2. Sign In");
-                int type = Integer.parseInt(scanner.nextLine());
-                if(type != 1 && type != 2)
-                    continue;
-                if(type == 1) {
-                    System.out.print("Username : ");
-                    String user = scanner.nextLine();
-                    System.out.print("Password : ");
-                    String pass = scanner.nextLine();
-                    System.out.print("Confirm Password : ");
-                    String confPass = scanner.nextLine();
-                    outputStream.writeObject(new Msg("Null", user, "CheckUser"));
+                try {
+                    System.out.println("1. Sign Up\n2. Sign In");
+                    int type = Integer.parseInt(scanner.nextLine());
+                    if (type != 1 && type != 2)
+                        continue;
+                    if (type == 1) {
+                        System.out.print("Username : ");
+                        String user = scanner.nextLine();
+                        System.out.print("Password : ");
+                        String pass = scanner.nextLine();
+                        System.out.print("Confirm Password : ");
+                        String confPass = scanner.nextLine();
+                        outputStream.writeObject(new Msg("Null", user, "CheckUser"));
+                        if (checkUser.equals("False")) {
+
+                        }
+                    }
+                    break;
                 }
-                break;
+                catch(NumberFormatException e) {
+                    System.out.println("Enter a Valid Number");
+                }
             }
 
             //send part
@@ -71,8 +81,12 @@ public class Client extends ClientData {
             while (true){
                 try {
                     Msg msg = (Msg) objectInputStream.readObject();
-                    System.out.println( msg.getOwner().toString() + " " + msg.getText().toString());
-
+                    if(msg.getType().equals("CheckUser")) {
+                        checkUser = msg.getText();
+                    }
+                    else {
+                        System.out.println(msg.getOwner().toString() + " " + msg.getText().toString());
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();

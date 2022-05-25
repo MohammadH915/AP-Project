@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,7 +9,9 @@ public class Server {
     private int port;
     private ConcurrentLinkedQueue<ClientHandler> clients = new ConcurrentLinkedQueue<ClientHandler>();
 
+    private DataBase dataBase;
     public Server(int port) {
+        this.dataBase = new DataBase();
         this.port = port;
     }
 
@@ -67,8 +70,13 @@ public class Server {
             try {
                 while (true) {
                     Msg msg = (Msg) objectInput.readObject();
-                    if(msg.getType().equals("CheckUser"))
-                    if (msg.getType().equals("join")) {
+                    if(msg.getType().equals("CheckUser")) {
+                        if(dataBase.checkClient(msg.getText()) == false)
+                            sendToClient(new Msg("Null", "False", "CheckUser"));
+                        else
+                            sendToClient(new Msg("Null", "True", "CheckUser"));
+                    }
+                    else if (msg.getType().equals("join")) {
                         System.out.println(msg.getOwner().toString() + " is joined to server");
                         this.name = msg.getOwner();
                         clients.add(this);
